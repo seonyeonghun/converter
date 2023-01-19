@@ -15,7 +15,7 @@
 }
 .unit-converter {
   display: flex;
-  max-width: 1190px;
+  /* max-width: 1190px; */
   justify-content: center;
   margin: 2rem;
 }
