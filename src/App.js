@@ -1,52 +1,48 @@
-import React, { useState } from "react";
 import "./App.css";
-
+import { useState } from "react"; 
 function App() {
-  // 화살함수
-  const convert = () => console.log("단위를 min에서 hours로 변경합니다");
-  const [amount, setAmount] = useState("0");
-
-  // 일반함수
-  function handleChange(event) {
-    setAmount(event.target.value);
-  }
-
-  // 화살표 함수 표기법
-  const resetInput = () => setAmount("0");
-  const handleSubmit = (e) => e.preventDefault(); // 이벤트 전파를 막아서 새로고침을 안되게!
+  const [amount, setAmount] = useState("0"); // state변수, state변경함수로 초기값을 0으로 설정
+  const [disable, setDisable] = useState(true); // 가능, 불가능을 나타내는 state변수
+  const onChange = (e) => setAmount(e.target.value); // 화살표 함수(Arrow Function)
+  const resetInput = () => setAmount("0"); // amount 값을 0으로 초기화하는 화살표 함수
+  const invertInput = () => setDisable(false);
+  const handleSubmit = (e) => e.preventDefault(); // 이벤트 버블링을 금지! (refresh 못하게)
   return (
-    <div className='main'>
-      <h1 className='site-header'>단위 환산 앱</h1>
+    <div className='App'>
+      <div className='site-header'>
+        <h1>
+          단위 환산 앱 <span>Night</span>
+        </h1>
+      </div>
       <div className='unit-converter'>
         <div className='ad'>
-          구글 광고나 네이버 광고 이미지가 옵니다. 광고주님들, 연락주세요 ㅠ
+        광고 이미지 [Sponsor]
         </div>
         <div className='converter'>
           <form onSubmit={handleSubmit}>
-            <ul>
-              <li>
-                <input
-                  type='text'
-                  value={amount}
-                  onChange={handleChange}
-                  placeholder='값을 입력하세요'
-                />
-                <label>minutes</label>
-              </li>
-              <li>
-                <input
-                  type='text'
-                  value={amount / 60}
-                  placeholder='값을 입력하세요'
-                />
-                <label>hours</label>
-              </li>
-              <li>
-                <button onClick={resetInput}>리셋</button>
-              </li>
-            </ul>
+            <fieldset>
+              <legend>시간단위 환산기 [Minutes to Hours Converter]</legend>
+              <ul>
+                <li>
+                  <input type="text" value={disable ? amount : amount / 60} onChange={onChange} disabled={!disable} />
+                  <label>분</label>
+                </li>
+                <li>
+                  <input type="text" value={!disable ? amount :  amount / 60} disabled={disable} /> {/* 분->시간 환산법 */}
+                  <label>시간</label>
+                </li>
+                <li>
+                  <button onClick={resetInput}>초기화</button>
+                  <button onClick={invertInput}>반전</button>
+                </li>
+              </ul>
+            </fieldset>
           </form>
         </div>
+      </div>
+      <div className="site-footer">
+        <hr />
+        &copy; seon
       </div>
     </div>
   );
